@@ -124,9 +124,7 @@ typedef struct
 
 - (BOOL)canDrawInCGLContext:(CGLContextObj)glContext pixelFormat:(CGLPixelFormatObj)pixelFormat forLayerTime:(CFTimeInterval)timeInterval displayTime:(const CVTimeStamp *)timeStamp
 {
-    // Just like the default, we'll just always return YES and always refresh.
-
-    // You normally would not override this method to do this.
+    // We can control when to draw, by returning a BOOL here
     return self.shouldUpdate;
 }
 

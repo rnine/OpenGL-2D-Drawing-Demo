@@ -114,15 +114,15 @@
 		4527D46E18D4523300B5AA3A /* OpenGL 2D Drawing Demo */ = {
 			isa = PBXGroup;
 			children = (
+				4574D7A318D4A5050014C7BC /* error.h */,
 				4527D47A18D4523300B5AA3A /* TLDAppDelegate.h */,
 				4527D47B18D4523300B5AA3A /* TLDAppDelegate.m */,
-				4527D47D18D4523300B5AA3A /* MainMenu.xib */,
-				4527D48018D4523300B5AA3A /* Images.xcassets */,
-				4527D46F18D4523300B5AA3A /* Supporting Files */,
-				4574D7A318D4A5050014C7BC /* error.h */,
 				4527D4A518D4541600B5AA3A /* TLDCommon.h */,
 				4527D4A618D4547400B5AA3A /* TLDOpenGLLayer.h */,
 				4527D4A718D4547400B5AA3A /* TLDOpenGLLayer.m */,
+				4527D47D18D4523300B5AA3A /* MainMenu.xib */,
+				4527D48018D4523300B5AA3A /* Images.xcassets */,
+				4527D46F18D4523300B5AA3A /* Supporting Files */,
 			);
 			path = "OpenGL 2D Drawing Demo";
 			sourceTree = "<group>";
