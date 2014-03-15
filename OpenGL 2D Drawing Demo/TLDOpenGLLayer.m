@@ -9,14 +9,15 @@
 #import "TLDOpenGLLayer.h"
 #import "error.h"
 #import <OpenGL/OpenGL.h>
-#import <OpenGL/gl.h>
 #import <OpenGL/gl3.h>
+#import <GLKit/GLKMath.h>
 
 enum Uniforms
 {
     kPositionUniform = 0,
     kBackgroundUniform,
     kHoleUniform,
+    kModelViewProjectionMatrixUniform,
     kNumUniforms
 };
 
@@ -61,6 +62,9 @@ typedef struct
 
     GLint _colorAttribute;
     GLint _positionAttribute;
+
+    CGRect _oldBounds;
+    GLKMatrix4 _orthoMat;
 }
 @end
 
@@ -147,7 +151,21 @@ typedef struct
     glUseProgram(_shaderProgram);
     GetError();
 
-    Vector2 p = { .x = 0.5f * sinf(timeInterval), .y = 0.5f * cosf(timeInterval) };
+    if (!CGRectEqualToRect(self.bounds, _oldBounds))
+    {
+        _orthoMat = GLKMatrix4MakeOrtho(0, NSWidth(self.bounds), 0, NSHeight(self.bounds), -1, 1);
+        [self loadBufferData];
+    }
+
+    _oldBounds = self.bounds;
+
+    glUniformMatrix4fv(_uniforms[kModelViewProjectionMatrixUniform], 1, GL_FALSE, _orthoMat.m);
+    GetError();
+
+    GLfloat midMidX = NSWidth(self.bounds) * 0.25;
+    GLfloat midMidY = NSHeight(self.bounds) * 0.25;
+
+    Vector2 p = { .x = midMidX + midMidX * sinf(timeInterval), .y = midMidY + midMidY * cosf(timeInterval) };
 
     glUniform2fv(_uniforms[kPositionUniform], 1, (const GLfloat *)&p);
     GetError();
@@ -159,7 +177,8 @@ typedef struct
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     GetError();
 
-    Vector2 p2 = { .x = -p.x, .y = -p.y };
+    Vector2 p2 = { .x = midMidX + midMidX * -sinf(timeInterval), .y = midMidY + midMidY * cosf(timeInterval) };
+
 
     glUniform2fv(_uniforms[kPositionUniform], 1, (const GLfloat *)&p2);
     GetError();
@@ -229,7 +248,9 @@ typedef struct
         GetError();
         _uniforms[kBackgroundUniform] = glGetUniformLocation(_shaderProgram, "background");
         GetError();
-        _uniforms[kHoleUniform]       = glGetUniformLocation(_shaderProgram, "hole");
+        _uniforms[kHoleUniform] = glGetUniformLocation(_shaderProgram, "hole");
+        GetError();
+        _uniforms[kModelViewProjectionMatrixUniform] = glGetUniformLocation(_shaderProgram, "modelViewProjectionMatrix");
         GetError();
 
         for (int uniformNumber = 0; uniformNumber < kNumUniforms; uniformNumber++)
@@ -392,16 +413,16 @@ typedef struct
 - (void)loadBufferData
 {
     Vertex vertexData[4] = {
-        { .position = { .x = -0.5, .y = -0.5, .z = 0.0, .w = 1.0 },
+        { .position = { .x = 0, .y = NSMidY(self.bounds), .z = 0.0, .w = 1.0 },
           .color = { .r = 1.0, .g = 0.0, .b = 0.0, .a = 1.0 }},
 
-        { .position = { .x = -0.5, .y = 0.5, .z = 0.0, .w = 1.0 },
+        { .position = { .x = 0, .y = 0, .z = 0.0, .w = 1.0 },
           .color = { .r = 0.0, .g = 1.0, .b = 0.0, .a = 1.0 }},
 
-        { .position = { .x = 0.5, .y = 0.5, .z = 0.0, .w = 1.0 },
+        { .position = { .x = NSMidX(self.bounds), .y = 0, .z = 0.0, .w = 1.0 },
           .color = { .r = 0.0, .g = 0.0, .b = 1.0, .a = 1.0 }},
 
-        { .position = { .x = 0.5, .y = -0.5, .z = 0.0, .w = 1.0 },
+        { .position = { .x = NSMidX(self.bounds), .y = NSMidY(self.bounds), .z = 0.0, .w = 1.0 },
           .color = { .r = 1.0, .g = 1.0, .b = 1.0, .a = 1.0 }}
     };
 
