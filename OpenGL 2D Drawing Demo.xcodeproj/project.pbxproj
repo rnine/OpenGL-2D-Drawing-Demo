@@ -1,0 +1,482 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4527D46918D4523300B5AA3A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4527D46818D4523300B5AA3A /* Cocoa.framework */; };
+		4527D47318D4523300B5AA3A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4527D47118D4523300B5AA3A /* InfoPlist.strings */; };
+		4527D47518D4523300B5AA3A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4527D47418D4523300B5AA3A /* main.m */; };
+		4527D47918D4523300B5AA3A /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4527D47718D4523300B5AA3A /* Credits.rtf */; };
+		4527D47C18D4523300B5AA3A /* TLDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4527D47B18D4523300B5AA3A /* TLDAppDelegate.m */; };
+		4527D47F18D4523300B5AA3A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4527D47D18D4523300B5AA3A /* MainMenu.xib */; };
+		4527D48118D4523300B5AA3A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4527D48018D4523300B5AA3A /* Images.xcassets */; };
+		4527D48818D4523300B5AA3A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4527D48718D4523300B5AA3A /* XCTest.framework */; };
+		4527D48918D4523300B5AA3A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4527D46818D4523300B5AA3A /* Cocoa.framework */; };
+		4527D49118D4523300B5AA3A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4527D48F18D4523300B5AA3A /* InfoPlist.strings */; };
+		4527D49318D4523300B5AA3A /* OpenGL_2D_Drawing_DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4527D49218D4523300B5AA3A /* OpenGL_2D_Drawing_DemoTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4527D48A18D4523300B5AA3A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4527D45D18D4523300B5AA3A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4527D46418D4523300B5AA3A;
+			remoteInfo = "OpenGL 2D Drawing Demo";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4527D46518D4523300B5AA3A /* OpenGL 2D Drawing Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OpenGL 2D Drawing Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4527D46818D4523300B5AA3A /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		4527D46B18D4523300B5AA3A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		4527D46C18D4523300B5AA3A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		4527D46D18D4523300B5AA3A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4527D47018D4523300B5AA3A /* OpenGL 2D Drawing Demo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OpenGL 2D Drawing Demo-Info.plist"; sourceTree = "<group>"; };
+		4527D47218D4523300B5AA3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4527D47418D4523300B5AA3A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4527D47618D4523300B5AA3A /* OpenGL 2D Drawing Demo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OpenGL 2D Drawing Demo-Prefix.pch"; sourceTree = "<group>"; };
+		4527D47818D4523300B5AA3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		4527D47A18D4523300B5AA3A /* TLDAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TLDAppDelegate.h; sourceTree = "<group>"; };
+		4527D47B18D4523300B5AA3A /* TLDAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TLDAppDelegate.m; sourceTree = "<group>"; };
+		4527D47E18D4523300B5AA3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		4527D48018D4523300B5AA3A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		4527D48618D4523300B5AA3A /* OpenGL 2D Drawing DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "OpenGL 2D Drawing DemoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4527D48718D4523300B5AA3A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		4527D48E18D4523300B5AA3A /* OpenGL 2D Drawing DemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OpenGL 2D Drawing DemoTests-Info.plist"; sourceTree = "<group>"; };
+		4527D49018D4523300B5AA3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4527D49218D4523300B5AA3A /* OpenGL_2D_Drawing_DemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenGL_2D_Drawing_DemoTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4527D46218D4523300B5AA3A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4527D46918D4523300B5AA3A /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4527D48318D4523300B5AA3A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4527D48918D4523300B5AA3A /* Cocoa.framework in Frameworks */,
+				4527D48818D4523300B5AA3A /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4527D45C18D4523300B5AA3A = {
+			isa = PBXGroup;
+			children = (
+				4527D46E18D4523300B5AA3A /* OpenGL 2D Drawing Demo */,
+				4527D48C18D4523300B5AA3A /* OpenGL 2D Drawing DemoTests */,
+				4527D46718D4523300B5AA3A /* Frameworks */,
+				4527D46618D4523300B5AA3A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4527D46618D4523300B5AA3A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4527D46518D4523300B5AA3A /* OpenGL 2D Drawing Demo.app */,
+				4527D48618D4523300B5AA3A /* OpenGL 2D Drawing DemoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4527D46718D4523300B5AA3A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4527D46818D4523300B5AA3A /* Cocoa.framework */,
+				4527D48718D4523300B5AA3A /* XCTest.framework */,
+				4527D46A18D4523300B5AA3A /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4527D46A18D4523300B5AA3A /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4527D46B18D4523300B5AA3A /* AppKit.framework */,
+				4527D46C18D4523300B5AA3A /* CoreData.framework */,
+				4527D46D18D4523300B5AA3A /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		4527D46E18D4523300B5AA3A /* OpenGL 2D Drawing Demo */ = {
+			isa = PBXGroup;
+			children = (
+				4527D47A18D4523300B5AA3A /* TLDAppDelegate.h */,
+				4527D47B18D4523300B5AA3A /* TLDAppDelegate.m */,
+				4527D47D18D4523300B5AA3A /* MainMenu.xib */,
+				4527D48018D4523300B5AA3A /* Images.xcassets */,
+				4527D46F18D4523300B5AA3A /* Supporting Files */,
+			);
+			path = "OpenGL 2D Drawing Demo";
+			sourceTree = "<group>";
+		};
+		4527D46F18D4523300B5AA3A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4527D47018D4523300B5AA3A /* OpenGL 2D Drawing Demo-Info.plist */,
+				4527D47118D4523300B5AA3A /* InfoPlist.strings */,
+				4527D47418D4523300B5AA3A /* main.m */,
+				4527D47618D4523300B5AA3A /* OpenGL 2D Drawing Demo-Prefix.pch */,
+				4527D47718D4523300B5AA3A /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4527D48C18D4523300B5AA3A /* OpenGL 2D Drawing DemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				4527D49218D4523300B5AA3A /* OpenGL_2D_Drawing_DemoTests.m */,
+				4527D48D18D4523300B5AA3A /* Supporting Files */,
+			);
+			path = "OpenGL 2D Drawing DemoTests";
+			sourceTree = "<group>";
+		};
+		4527D48D18D4523300B5AA3A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4527D48E18D4523300B5AA3A /* OpenGL 2D Drawing DemoTests-Info.plist */,
+				4527D48F18D4523300B5AA3A /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4527D46418D4523300B5AA3A /* OpenGL 2D Drawing Demo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4527D49618D4523300B5AA3A /* Build configuration list for PBXNativeTarget "OpenGL 2D Drawing Demo" */;
+			buildPhases = (
+				4527D46118D4523300B5AA3A /* Sources */,
+				4527D46218D4523300B5AA3A /* Frameworks */,
+				4527D46318D4523300B5AA3A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "OpenGL 2D Drawing Demo";
+			productName = "OpenGL 2D Drawing Demo";
+			productReference = 4527D46518D4523300B5AA3A /* OpenGL 2D Drawing Demo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4527D48518D4523300B5AA3A /* OpenGL 2D Drawing DemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4527D49918D4523300B5AA3A /* Build configuration list for PBXNativeTarget "OpenGL 2D Drawing DemoTests" */;
+			buildPhases = (
+				4527D48218D4523300B5AA3A /* Sources */,
+				4527D48318D4523300B5AA3A /* Frameworks */,
+				4527D48418D4523300B5AA3A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4527D48B18D4523300B5AA3A /* PBXTargetDependency */,
+			);
+			name = "OpenGL 2D Drawing DemoTests";
+			productName = "OpenGL 2D Drawing DemoTests";
+			productReference = 4527D48618D4523300B5AA3A /* OpenGL 2D Drawing DemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4527D45D18D4523300B5AA3A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = TLD;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Ruben Nine";
+				TargetAttributes = {
+					4527D48518D4523300B5AA3A = {
+						TestTargetID = 4527D46418D4523300B5AA3A;
+					};
+				};
+			};
+			buildConfigurationList = 4527D46018D4523300B5AA3A /* Build configuration list for PBXProject "OpenGL 2D Drawing Demo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4527D45C18D4523300B5AA3A;
+			productRefGroup = 4527D46618D4523300B5AA3A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4527D46418D4523300B5AA3A /* OpenGL 2D Drawing Demo */,
+				4527D48518D4523300B5AA3A /* OpenGL 2D Drawing DemoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4527D46318D4523300B5AA3A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4527D47318D4523300B5AA3A /* InfoPlist.strings in Resources */,
+				4527D48118D4523300B5AA3A /* Images.xcassets in Resources */,
+				4527D47918D4523300B5AA3A /* Credits.rtf in Resources */,
+				4527D47F18D4523300B5AA3A /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4527D48418D4523300B5AA3A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4527D49118D4523300B5AA3A /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4527D46118D4523300B5AA3A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4527D47518D4523300B5AA3A /* main.m in Sources */,
+				4527D47C18D4523300B5AA3A /* TLDAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4527D48218D4523300B5AA3A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4527D49318D4523300B5AA3A /* OpenGL_2D_Drawing_DemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4527D48B18D4523300B5AA3A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4527D46418D4523300B5AA3A /* OpenGL 2D Drawing Demo */;
+			targetProxy = 4527D48A18D4523300B5AA3A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4527D47118D4523300B5AA3A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4527D47218D4523300B5AA3A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		4527D47718D4523300B5AA3A /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4527D47818D4523300B5AA3A /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		4527D47D18D4523300B5AA3A /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4527D47E18D4523300B5AA3A /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		4527D48F18D4523300B5AA3A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4527D49018D4523300B5AA3A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4527D49418D4523300B5AA3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4527D49518D4523300B5AA3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4527D49718D4523300B5AA3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OpenGL 2D Drawing Demo/OpenGL 2D Drawing Demo-Prefix.pch";
+				INFOPLIST_FILE = "OpenGL 2D Drawing Demo/OpenGL 2D Drawing Demo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		4527D49818D4523300B5AA3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OpenGL 2D Drawing Demo/OpenGL 2D Drawing Demo-Prefix.pch";
+				INFOPLIST_FILE = "OpenGL 2D Drawing Demo/OpenGL 2D Drawing Demo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		4527D49A18D4523300B5AA3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/OpenGL 2D Drawing Demo.app/Contents/MacOS/OpenGL 2D Drawing Demo";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OpenGL 2D Drawing Demo/OpenGL 2D Drawing Demo-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "OpenGL 2D Drawing DemoTests/OpenGL 2D Drawing DemoTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		4527D49B18D4523300B5AA3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/OpenGL 2D Drawing Demo.app/Contents/MacOS/OpenGL 2D Drawing Demo";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OpenGL 2D Drawing Demo/OpenGL 2D Drawing Demo-Prefix.pch";
+				INFOPLIST_FILE = "OpenGL 2D Drawing DemoTests/OpenGL 2D Drawing DemoTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4527D46018D4523300B5AA3A /* Build configuration list for PBXProject "OpenGL 2D Drawing Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4527D49418D4523300B5AA3A /* Debug */,
+				4527D49518D4523300B5AA3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4527D49618D4523300B5AA3A /* Build configuration list for PBXNativeTarget "OpenGL 2D Drawing Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4527D49718D4523300B5AA3A /* Debug */,
+				4527D49818D4523300B5AA3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		4527D49918D4523300B5AA3A /* Build configuration list for PBXNativeTarget "OpenGL 2D Drawing DemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4527D49A18D4523300B5AA3A /* Debug */,
+				4527D49B18D4523300B5AA3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4527D45D18D4523300B5AA3A /* Project object */;
+}
