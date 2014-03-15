@@ -11,5 +11,6 @@
 @interface TLDAppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
+@property (weak) IBOutlet NSView *layerHostView;
 
 @end

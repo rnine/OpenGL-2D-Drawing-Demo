@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5023" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5023"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -13,6 +13,7 @@
         <customObject id="-3" userLabel="Application"/>
         <customObject id="Voe-Tx-rLC" customClass="TLDAppDelegate">
             <connections>
+                <outlet property="layerHostView" destination="7D3-b0-KmL" id="pWe-b9-Gda"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -636,8 +637,8 @@
                                     <action selector="performMiniaturize:" target="-1" id="VwT-WD-YPe"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Zoom" id="R4o-n2-Eq4">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Zoom" keyEquivalent="" id="R4o-n2-Eq4">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                 <connections>
                                     <action selector="performZoom:" target="-1" id="DIl-cC-cCs"/>
                                 </connections>
@@ -670,10 +671,35 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="7D3-b0-KmL">
+                        <rect key="frame" x="0.0" y="42" width="480" height="318"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </customView>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="q4T-2i-dXB">
+                        <rect key="frame" x="18" y="18" width="100" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Should draw" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="X9r-2S-fun">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="shouldDraw:" target="Voe-Tx-rLC" id="vls-in-B5E"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="q4T-2i-dXB" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" symbolic="YES" id="J1s-DJ-Qem"/>
+                    <constraint firstItem="q4T-2i-dXB" firstAttribute="top" secondItem="7D3-b0-KmL" secondAttribute="bottom" constant="8" symbolic="YES" id="WfN-Jt-MRp"/>
+                    <constraint firstAttribute="trailing" secondItem="7D3-b0-KmL" secondAttribute="trailing" id="aUX-3p-Wpg"/>
+                    <constraint firstItem="7D3-b0-KmL" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="fo1-AV-3YL"/>
+                    <constraint firstAttribute="bottom" secondItem="7D3-b0-KmL" secondAttribute="bottom" constant="42" id="sef-9q-eFE"/>
+                    <constraint firstItem="7D3-b0-KmL" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="tDg-3s-iQ7"/>
+                </constraints>
             </view>
         </window>
     </objects>

@@ -7,12 +7,26 @@
 //
 
 #import "TLDAppDelegate.h"
+#import "TLDOpenGLLayer.h"
+
+@interface TLDAppDelegate ()
+
+@property (strong, nonatomic) TLDOpenGLLayer *openGLLayer;
+
+@end
 
 @implementation TLDAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // Insert code here to initialize your application
+    self.openGLLayer = [TLDOpenGLLayer layer];
+    self.layerHostView.wantsLayer = YES;
+    self.layerHostView.layer = self.openGLLayer;
+}
+
+- (IBAction)shouldDraw:(id)sender
+{
+    self.openGLLayer.shouldUpdate = [sender state] == NSOnState;
 }
 
 @end
