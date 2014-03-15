@@ -177,7 +177,7 @@ typedef struct
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     GetError();
 
-    Vector2 p2 = { .x = midMidX + midMidX * -sinf(timeInterval), .y = midMidY + midMidY * cosf(timeInterval) };
+    Vector2 p2 = { .x = midMidX + midMidX * -sinf(timeInterval), .y = midMidY + midMidY * -cosf(timeInterval) };
 
 
     glUniform2fv(_uniforms[kPositionUniform], 1, (const GLfloat *)&p2);
