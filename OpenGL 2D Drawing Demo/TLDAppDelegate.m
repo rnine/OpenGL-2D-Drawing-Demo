@@ -24,6 +24,17 @@
     self.layerHostView.layer = self.openGLLayer;
 }
 
+- (void)windowWillClose:(NSNotification *)notification
+{
+    self.layerHostView.layer = nil;
+    self.openGLLayer = nil;
+}
+
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
+{
+    return YES;
+}
+
 - (IBAction)shouldDraw:(id)sender
 {
     self.openGLLayer.shouldUpdate = [sender state] == NSOnState;

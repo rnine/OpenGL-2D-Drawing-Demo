@@ -20,6 +20,13 @@ enum Uniforms
     kNumUniforms
 };
 
+enum Textures
+{
+    kBackgroundTexture = 0,
+    kHoleTexture,
+    kNumTextures
+};
+
 typedef struct
 {
     GLfloat x, y;
@@ -50,6 +57,7 @@ typedef struct
     GLuint _vbo;
 
     GLint _uniforms[kNumUniforms];
+    GLuint _textures[kNumUniforms];
 
     GLint _colorAttribute;
     GLint _positionAttribute;
@@ -165,11 +173,26 @@ typedef struct
 
 - (void)dealloc
 {
-    glDeleteProgram(_shaderProgram);
-    GetError();
+    if (_shaderProgram)
+    {
+        glDeleteProgram(_shaderProgram);
+        GetError();
+    }
 
-    glDeleteBuffers(1, &_vbo);
-    GetError();
+    if (_vbo)
+    {
+        glDeleteBuffers(1, &_vbo);
+        GetError();
+    }
+
+    for (int i = 0; i < kNumTextures; i++)
+    {
+        if (_textures[i])
+        {
+            glDeleteTextures(1, &_textures[i]);
+            GetError();
+        }
+    }
 
     DLog(@"Dealloc'ing layer");
 }
@@ -412,13 +435,13 @@ typedef struct
 
 - (void)loadTextureData
 {
-    GLuint backgroundTexture = [self loadTextureNamed:@"background"];
-    GLuint holeTexture       = [self loadTextureNamed:@"hole"];
+    _textures[kBackgroundTexture] = [self loadTextureNamed:@"background"];
+    _textures[kHoleTexture] = [self loadTextureNamed:@"hole"];
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, backgroundTexture);
+    glBindTexture(GL_TEXTURE_2D, _textures[kBackgroundTexture]);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, holeTexture);
+    glBindTexture(GL_TEXTURE_2D, _textures[kHoleTexture]);
 }
 
 - (GLuint)loadTextureNamed:(NSString *)name
