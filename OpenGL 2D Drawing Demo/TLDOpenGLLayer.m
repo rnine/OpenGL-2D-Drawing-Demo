@@ -12,6 +12,14 @@
 #import <OpenGL/gl.h>
 #import <OpenGL/gl3.h>
 
+enum Uniforms
+{
+    kPositionUniform = 0,
+    kBackgroundUniform,
+    kHoleUniform,
+    kNumUniforms
+};
+
 typedef struct
 {
     GLfloat x, y;
@@ -41,7 +49,8 @@ typedef struct
     GLuint _vao;
     GLuint _vbo;
 
-    GLint _positionUniform;
+    GLint _uniforms[kNumUniforms];
+
     GLint _colorAttribute;
     GLint _positionAttribute;
 }
@@ -57,6 +66,7 @@ typedef struct
 
     if (self)
     {
+        self.needsDisplayOnBoundsChange = YES;
         self.asynchronous = YES;
         self.shouldUpdate = YES;
     }
@@ -78,6 +88,7 @@ typedef struct
 
         [self loadShader];
         [self loadBufferData];
+        [self loadTextureData];
 
         glClearColor(0.0, 0.0, 0.2, 1.0);
         GetError();
@@ -132,7 +143,19 @@ typedef struct
 
     Vector2 p = { .x = 0.5f * sinf(timeInterval), .y = 0.5f * cosf(timeInterval) };
 
-    glUniform2fv(_positionUniform, 1, (const GLfloat *)&p);
+    glUniform2fv(_uniforms[kPositionUniform], 1, (const GLfloat *)&p);
+    GetError();
+    glUniform1i(_uniforms[kBackgroundUniform], 0);
+    GetError();
+    glUniform1i(_uniforms[kHoleUniform], 1);
+    GetError();
+
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    GetError();
+
+    Vector2 p2 = { .x = -p.x, .y = -p.y };
+
+    glUniform2fv(_uniforms[kPositionUniform], 1, (const GLfloat *)&p2);
     GetError();
 
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
@@ -181,13 +204,20 @@ typedef struct
 
         [self linkProgram:_shaderProgram];
 
-        _positionUniform = glGetUniformLocation(_shaderProgram, "p");
+        _uniforms[kPositionUniform] = glGetUniformLocation(_shaderProgram, "p");
+        GetError();
+        _uniforms[kBackgroundUniform] = glGetUniformLocation(_shaderProgram, "background");
+        GetError();
+        _uniforms[kHoleUniform]       = glGetUniformLocation(_shaderProgram, "hole");
         GetError();
 
-        if (_positionUniform < 0)
+        for (int uniformNumber = 0; uniformNumber < kNumUniforms; uniformNumber++)
         {
-            [NSException raise:kFailedToInitialiseGLException
-                        format:@"Shader did not contain the 'p' uniform."];
+            if (_uniforms[uniformNumber] < 0)
+            {
+                [NSException raise:kFailedToInitialiseGLException
+                            format:@"Shader is missing a uniform."];
+            }
         }
 
         _colorAttribute = glGetAttribLocation(_shaderProgram, "color");
@@ -267,7 +297,8 @@ typedef struct
     {
         glDeleteShader(shader);
         GetError();
-        [NSException raise:kFailedToInitialiseGLException format:@"Shader compilation failed for file %@", file];
+        [NSException raise:kFailedToInitialiseGLException
+                    format:@"Shader compilation failed for file %@", file];
     }
 
     return shader;
@@ -332,7 +363,8 @@ typedef struct
 
     if (0 == status)
     {
-        [NSException raise:kFailedToInitialiseGLException format:@"Failed to link shader program"];
+        [NSException raise:kFailedToInitialiseGLException
+                    format:@"Failed to link shader program"];
     }
 }
 
@@ -378,6 +410,68 @@ typedef struct
 
     glVertexAttribPointer((GLuint)_colorAttribute, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid *)offsetof(Vertex, color));
     GetError();
+}
+
+- (void)loadTextureData
+{
+    GLuint backgroundTexture = [self loadTextureNamed:@"background"];
+    GLuint holeTexture       = [self loadTextureNamed:@"hole"];
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, backgroundTexture);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, holeTexture);
+}
+
+- (GLuint)loadTextureNamed:(NSString *)name
+{
+    CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)[[NSBundle mainBundle] URLForImageResource:name], NULL);
+    CGImageRef image = CGImageSourceCreateImageAtIndex(imageSource, 0, NULL);
+
+    CFRelease(imageSource);
+    size_t width  = CGImageGetWidth(image);
+    size_t height = CGImageGetHeight(image);
+    CGRect rect = CGRectMake(0.0f, 0.0f, width, height);
+
+    void *imageData = malloc(width * height * 4);
+
+    CGColorSpaceRef colourSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef ctx = CGBitmapContextCreate(imageData, width, height, 8, width * 4, colourSpace, kCGBitmapByteOrder32Host | kCGImageAlphaPremultipliedFirst);
+    CFRelease(colourSpace);
+
+    CGContextTranslateCTM(ctx, 0, height);
+    CGContextScaleCTM(ctx, 1.0f, -1.0f);
+    CGContextSetBlendMode(ctx, kCGBlendModeCopy);
+    CGContextDrawImage(ctx, rect, image);
+    CGContextRelease(ctx);
+
+    CFRelease(image);
+
+    GLuint glName;
+    glGenTextures(1, &glName);
+    GetError();
+    glBindTexture(GL_TEXTURE_2D, glName);
+    GetError();
+
+    glPixelStorei(GL_UNPACK_ROW_LENGTH, (GLint)width);
+    GetError();
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    GetError();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    GetError();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    GetError();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    GetError();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    GetError();
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, (int)width, (int)height, 0, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, imageData);
+    GetError();
+
+    free(imageData);
+
+    return glName;
 }
 
 @end
