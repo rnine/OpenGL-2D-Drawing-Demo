@@ -9,14 +9,13 @@
 #import "TLDOpenGLLayer.h"
 #import "error.h"
 #import <OpenGL/OpenGL.h>
-#import <OpenGL/gl.h>
 #import <OpenGL/gl3.h>
+#import <GLKit/GLKMath.h>
 
 enum Uniforms
 {
-    kPositionUniform = 0,
-    kBackgroundUniform,
-    kHoleUniform,
+    kMeterUniform = 0,
+    kModelViewProjectionMatrixUniform,
     kNumUniforms
 };
 
@@ -48,6 +47,18 @@ typedef struct
     Color color;
 } Vertex;
 
+typedef struct
+{
+    Vector2 vertices;
+    Vector2 textCoords;
+} VertexTextCoords;
+
+typedef struct
+{
+    GLuint index;
+    CGSize dimensions;
+} TextureInfo;
+
 #pragma mark -
 
 @interface TLDOpenGLLayer ()
@@ -57,10 +68,14 @@ typedef struct
     GLuint _vbo;
 
     GLint _uniforms[kNumUniforms];
-    GLuint _textures[kNumTextures];
+    TextureInfo _textures[kNumTextures];
 
     GLint _colorAttribute;
     GLint _positionAttribute;
+    GLint _textCoordAttribute;
+
+    CGRect _oldBounds;
+    GLKMatrix4 _orthoMat;
 }
 @end
 
@@ -95,7 +110,6 @@ typedef struct
         CGLSetCurrentContext(context);
 
         [self loadShader];
-        [self loadBufferData];
         [self loadTextureData];
 
         glClearColor(0.0, 0.0, 0.2, 1.0);
@@ -147,25 +161,22 @@ typedef struct
     glUseProgram(_shaderProgram);
     GetError();
 
-    Vector2 p = { .x = 0.5f * sinf(timeInterval), .y = 0.5f * cosf(timeInterval) };
+    GLfloat sin = fabs(sinf(timeInterval));
+    GLfloat cos = fabs(cosf(timeInterval));
 
-    glUniform2fv(_uniforms[kPositionUniform], 1, (const GLfloat *)&p);
-    GetError();
-    glUniform1i(_uniforms[kBackgroundUniform], 0);
-    GetError();
-    glUniform1i(_uniforms[kHoleUniform], 1);
-    GetError();
+    [self drawRectangle:CGRectMake(0, 0,
+                                   sin * NSWidth(self.bounds),
+                                   14)
+        withContentRect:CGRectMake(0, 0,
+                                   sin,
+                                   1)];
 
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-    GetError();
-
-    Vector2 p2 = { .x = -p.x, .y = -p.y };
-
-    glUniform2fv(_uniforms[kPositionUniform], 1, (const GLfloat *)&p2);
-    GetError();
-
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-    GetError();
+    [self drawRectangle:CGRectMake(0, 15,
+                                   cos * NSWidth(self.bounds),
+                                   14)
+        withContentRect:CGRectMake(0, 0,
+                                   cos,
+                                   1)];
 
     // Call super to finalize the drawing. By default all it does is call glFlush().
     [super drawInCGLContext:glContext pixelFormat:pixelFormat forLayerTime:timeInterval displayTime:timeStamp];
@@ -187,9 +198,9 @@ typedef struct
 
     for (int i = 0; i < kNumTextures; i++)
     {
-        if (_textures[i])
+        if (_textures[i].index)
         {
-            glDeleteTextures(1, &_textures[i]);
+            glDeleteTextures(1, &_textures[i].index);
             GetError();
         }
     }
@@ -225,11 +236,9 @@ typedef struct
 
         [self linkProgram:_shaderProgram];
 
-        _uniforms[kPositionUniform] = glGetUniformLocation(_shaderProgram, "p");
+        _uniforms[kMeterUniform] = glGetUniformLocation(_shaderProgram, "meter");
         GetError();
-        _uniforms[kBackgroundUniform] = glGetUniformLocation(_shaderProgram, "background");
-        GetError();
-        _uniforms[kHoleUniform]       = glGetUniformLocation(_shaderProgram, "hole");
+        _uniforms[kModelViewProjectionMatrixUniform] = glGetUniformLocation(_shaderProgram, "TLD_MVPMatrix");
         GetError();
 
         for (int uniformNumber = 0; uniformNumber < kNumUniforms; uniformNumber++)
@@ -241,22 +250,22 @@ typedef struct
             }
         }
 
-        _colorAttribute = glGetAttribLocation(_shaderProgram, "color");
-        GetError();
-
-        if (_colorAttribute < 0)
-        {
-            [NSException raise:kFailedToInitialiseGLException
-                        format:@"Shader did not contain the 'color' attribute."];
-        }
-
-        _positionAttribute = glGetAttribLocation(_shaderProgram, "position");
+        _positionAttribute = glGetAttribLocation(_shaderProgram, "i_position");
         GetError();
 
         if (_positionAttribute < 0)
         {
             [NSException raise:kFailedToInitialiseGLException
-                        format:@"Shader did not contain the 'position' attribute."];
+                        format:@"Shader did not contain the 'i_position' attribute."];
+        }
+
+        _textCoordAttribute = glGetAttribLocation(_shaderProgram, "i_textCoord");
+        GetError();
+
+        if (_textCoordAttribute < 0)
+        {
+            [NSException raise:kFailedToInitialiseGLException
+                        format:@"Shader did not contain the 'i_textCoord' attribute."];
         }
 
         glDeleteShader(vertexShader);
@@ -389,63 +398,111 @@ typedef struct
     }
 }
 
-- (void)loadBufferData
+- (void)drawRectangle:(NSRect)rect withContentRect:(NSRect)contentRect
 {
-    Vertex vertexData[4] = {
-        { .position = { .x = -0.5, .y = -0.5, .z = 0.0, .w = 1.0 },
-          .color = { .r = 1.0, .g = 0.0, .b = 0.0, .a = 1.0 }},
+    GLint numVertex = 4;
 
-        { .position = { .x = -0.5, .y = 0.5, .z = 0.0, .w = 1.0 },
-          .color = { .r = 0.0, .g = 1.0, .b = 0.0, .a = 1.0 }},
-
-        { .position = { .x = 0.5, .y = 0.5, .z = 0.0, .w = 1.0 },
-          .color = { .r = 0.0, .g = 0.0, .b = 1.0, .a = 1.0 }},
-
-        { .position = { .x = 0.5, .y = -0.5, .z = 0.0, .w = 1.0 },
-          .color = { .r = 1.0, .g = 1.0, .b = 1.0, .a = 1.0 }}
+    VertexTextCoords vtc[4] = {
+        {
+            .vertices = { .x = NSMinX(rect), .y = NSMinY(rect) },
+            .textCoords = { .x = NSMinX(contentRect), .y = NSMinY(contentRect) }
+        },
+        {
+            .vertices = { .x = NSMaxX(rect), .y = NSMinY(rect) },
+            .textCoords = { .x = NSWidth(contentRect), .y = NSMinY(contentRect) }
+        },
+        {
+            .vertices = { .x = NSMaxX(rect), .y = NSMaxY(rect) },
+            .textCoords = { .x = NSWidth(contentRect), .y = NSHeight(contentRect) }
+        },
+        {
+            .vertices = { .x = NSMinX(rect), .y = NSMaxY(rect) },
+            .textCoords = { .x = NSMinX(contentRect), .y = NSHeight(contentRect) }
+        }
     };
 
-    glGenVertexArrays(1, &_vao);
+    if (!_vao)
+    {
+        glGenVertexArrays(1, &_vao);
+
+        GetError();
+
+        glBindVertexArray(_vao);
+        GetError();
+    }
+
+    if (!_vbo)
+    {
+        glGenBuffers(1, &_vbo);
+        GetError();
+
+        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+        GetError();
+    }
+
+    if (!CGRectEqualToRect(self.bounds, _oldBounds))
+    {
+        _orthoMat = GLKMatrix4MakeOrtho(0, NSWidth(self.bounds), 0, NSHeight(self.bounds), -1, 1);
+    }
+
+    _oldBounds = self.bounds;
+
+
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vtc), vtc, GL_STATIC_DRAW);
     GetError();
 
-    glBindVertexArray(_vao);
-    GetError();
-
-    glGenBuffers(1, &_vbo);
-    GetError();
-
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    GetError();
-
-    glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vertex), vertexData, GL_STATIC_DRAW);
-    GetError();
 
     glEnableVertexAttribArray((GLuint)_positionAttribute);
     GetError();
 
-    glEnableVertexAttribArray((GLuint)_colorAttribute);
+    glVertexAttribPointer((GLuint)_positionAttribute, numVertex, GL_FLOAT, GL_FALSE, sizeof(VertexTextCoords), (GLvoid *)offsetof(VertexTextCoords, vertices));
     GetError();
 
-    glVertexAttribPointer((GLuint)_positionAttribute, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid *)offsetof(Vertex, position));
+
+    glEnableVertexAttribArray((GLuint)_textCoordAttribute);
     GetError();
 
-    glVertexAttribPointer((GLuint)_colorAttribute, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid *)offsetof(Vertex, color));
+    glVertexAttribPointer((GLuint)_textCoordAttribute, numVertex, GL_FLOAT, GL_FALSE, sizeof(VertexTextCoords), (GLvoid *)offsetof(VertexTextCoords, textCoords));
+    GetError();
+
+
+    glUniformMatrix4fv(_uniforms[kModelViewProjectionMatrixUniform], 1, GL_FALSE, _orthoMat.m);
+    GetError();
+
+    glUniform1i(_uniforms[kMeterUniform], _textures[kMeterUniform].index - 1);
+    GetError();
+
+
+    // Select meter texture.
+    // We only have one texture and it is already active,
+    // so we don't actually need to switch texture again.
+    //
+    //    glActiveTexture(GL_TEXTURE0);
+    //    GetError();
+    //
+    //    glBindTexture(GL_TEXTURE_2D, _textures[kMeterUniform].index);
+    //    GetError();
+
+
+    glDrawArrays(GL_TRIANGLE_FAN, 0, numVertex);
     GetError();
 }
 
 - (void)loadTextureData
 {
-    _textures[kBackgroundTexture] = [self loadTextureNamed:@"background"];
-    _textures[kHoleTexture] = [self loadTextureNamed:@"hole"];
+    _textures[kMeterUniform] = [self loadTextureNamed:@"HMeter480"];
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _textures[kBackgroundTexture]);
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, _textures[kHoleTexture]);
+    if (_textures[kMeterUniform].index)
+    {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, _textures[kMeterUniform].index);
+    }
 }
 
-- (GLuint)loadTextureNamed:(NSString *)name
+- (TextureInfo)loadTextureNamed:(NSString *)name
 {
+    TextureInfo textureInfo;
+
     CGImageSourceRef imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)[[NSBundle mainBundle] URLForImageResource:name], NULL);
     CGImageRef image = CGImageSourceCreateImageAtIndex(imageSource, 0, NULL);
 
@@ -492,7 +549,10 @@ typedef struct
 
     free(imageData);
 
-    return glName;
+    textureInfo.index = glName;
+    textureInfo.dimensions = CGSizeMake(width, height);
+
+    return textureInfo;
 }
 
 @end

@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		450BCFC018D4C53400B8FE77 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 450BCFBE18D4C53400B8FE77 /* background.png */; };
-		450BCFC118D4C53400B8FE77 /* hole.png in Resources */ = {isa = PBXBuildFile; fileRef = 450BCFBF18D4C53400B8FE77 /* hole.png */; };
 		4527D46918D4523300B5AA3A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4527D46818D4523300B5AA3A /* Cocoa.framework */; };
 		4527D47318D4523300B5AA3A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4527D47118D4523300B5AA3A /* InfoPlist.strings */; };
 		4527D47518D4523300B5AA3A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4527D47418D4523300B5AA3A /* main.m */; };
@@ -19,13 +17,13 @@
 		4527D49D18D4526F00B5AA3A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4527D49C18D4526F00B5AA3A /* QuartzCore.framework */; };
 		4527D4A818D4547400B5AA3A /* TLDOpenGLLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4527D4A718D4547400B5AA3A /* TLDOpenGLLayer.m */; };
 		4527D4AA18D4553600B5AA3A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4527D4A918D4553600B5AA3A /* OpenGL.framework */; };
+		4547D03418D5AC4F00F5309B /* HMeter480.png in Resources */ = {isa = PBXBuildFile; fileRef = 4547D03318D5AC4F00F5309B /* HMeter480.png */; };
+		4547D03718D5B04D00F5309B /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4547D03618D5B04D00F5309B /* GLKit.framework */; };
 		4574D7A118D4A2590014C7BC /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 4574D79D18D4A23F0014C7BC /* Shader.fsh */; };
 		4574D7A218D4A2590014C7BC /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 4574D79E18D4A23F0014C7BC /* Shader.vsh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		450BCFBE18D4C53400B8FE77 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
-		450BCFBF18D4C53400B8FE77 /* hole.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hole.png; sourceTree = "<group>"; };
 		4527D46518D4523300B5AA3A /* OpenGL 2D Drawing Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OpenGL 2D Drawing Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4527D46818D4523300B5AA3A /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4527D46B18D4523300B5AA3A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -45,6 +43,8 @@
 		4527D4A618D4547400B5AA3A /* TLDOpenGLLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLDOpenGLLayer.h; sourceTree = "<group>"; };
 		4527D4A718D4547400B5AA3A /* TLDOpenGLLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLDOpenGLLayer.m; sourceTree = "<group>"; };
 		4527D4A918D4553600B5AA3A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		4547D03318D5AC4F00F5309B /* HMeter480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HMeter480.png; sourceTree = "<group>"; };
+		4547D03618D5B04D00F5309B /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		4574D79D18D4A23F0014C7BC /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
 		4574D79E18D4A23F0014C7BC /* Shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.vsh; sourceTree = "<group>"; };
 		4574D7A318D4A5050014C7BC /* error.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = error.h; sourceTree = "<group>"; };
@@ -55,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4547D03718D5B04D00F5309B /* GLKit.framework in Frameworks */,
 				4527D4AA18D4553600B5AA3A /* OpenGL.framework in Frameworks */,
 				4527D49D18D4526F00B5AA3A /* QuartzCore.framework in Frameworks */,
 				4527D46918D4523300B5AA3A /* Cocoa.framework in Frameworks */,
@@ -67,8 +68,7 @@
 		450BCFBD18D4C53400B8FE77 /* Textures */ = {
 			isa = PBXGroup;
 			children = (
-				450BCFBE18D4C53400B8FE77 /* background.png */,
-				450BCFBF18D4C53400B8FE77 /* hole.png */,
+				4547D03318D5AC4F00F5309B /* HMeter480.png */,
 			);
 			path = Textures;
 			sourceTree = "<group>";
@@ -93,6 +93,7 @@
 		4527D46718D4523300B5AA3A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4547D03618D5B04D00F5309B /* GLKit.framework */,
 				4527D4A918D4553600B5AA3A /* OpenGL.framework */,
 				4527D49C18D4526F00B5AA3A /* QuartzCore.framework */,
 				4527D46818D4523300B5AA3A /* Cocoa.framework */,
@@ -206,8 +207,7 @@
 			files = (
 				4574D7A118D4A2590014C7BC /* Shader.fsh in Resources */,
 				4574D7A218D4A2590014C7BC /* Shader.vsh in Resources */,
-				450BCFC018D4C53400B8FE77 /* background.png in Resources */,
-				450BCFC118D4C53400B8FE77 /* hole.png in Resources */,
+				4547D03418D5AC4F00F5309B /* HMeter480.png in Resources */,
 				4527D47318D4523300B5AA3A /* InfoPlist.strings in Resources */,
 				4527D48118D4523300B5AA3A /* Images.xcassets in Resources */,
 				4527D47918D4523300B5AA3A /* Credits.rtf in Resources */,
