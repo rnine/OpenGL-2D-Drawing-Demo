@@ -153,13 +153,20 @@ typedef struct
 - (void)drawInCGLContext:(CGLContextObj)glContext pixelFormat:(CGLPixelFormatObj)pixelFormat forLayerTime:(CFTimeInterval)timeInterval displayTime:(const CVTimeStamp *)timeStamp
 {
     // Set the current context to the one given to us.
+
     CGLSetCurrentContext(glContext);
+
+    // Clear buffer
 
     glClear(GL_COLOR_BUFFER_BIT);
     GetError();
 
+    // Choose our shader program
+
     glUseProgram(_shaderProgram);
     GetError();
+
+    // Draw two animated meters
 
     GLfloat sin = fabs(sinf(timeInterval));
     GLfloat cos = fabs(cosf(timeInterval));
@@ -179,6 +186,7 @@ typedef struct
                                    1)];
 
     // Call super to finalize the drawing. By default all it does is call glFlush().
+
     [super drawInCGLContext:glContext pixelFormat:pixelFormat forLayerTime:timeInterval displayTime:timeStamp];
 }
 
@@ -400,7 +408,7 @@ typedef struct
 
 - (void)drawRectangle:(NSRect)rect withContentRect:(NSRect)contentRect
 {
-    GLint numVertex = 4;
+    // Initialize our rectangle vertices and texture coordinates
 
     VertexTextCoords vtc[4] = {
         {
@@ -423,6 +431,8 @@ typedef struct
 
     if (!_vao)
     {
+        // Initialize vertex array object
+
         glGenVertexArrays(1, &_vao);
 
         GetError();
@@ -433,6 +443,8 @@ typedef struct
 
     if (!_vbo)
     {
+        // Initialize vertex buffer object
+
         glGenBuffers(1, &_vbo);
         GetError();
 
@@ -442,40 +454,49 @@ typedef struct
 
     if (!CGRectEqualToRect(self.bounds, _oldBounds))
     {
+        // Recalculate orthographic projection based on current bounds
         _orthoMat = GLKMatrix4MakeOrtho(0, NSWidth(self.bounds), 0, NSHeight(self.bounds), -1, 1);
     }
 
     _oldBounds = self.bounds;
 
 
+    // Setup MVP projection matrix uniform
+
+    glUniformMatrix4fv(_uniforms[kModelViewProjectionMatrixUniform], 1, GL_FALSE, _orthoMat.m);
+    GetError();
+
+
     glBufferData(GL_ARRAY_BUFFER, sizeof(vtc), vtc, GL_STATIC_DRAW);
     GetError();
 
 
-    glEnableVertexAttribArray((GLuint)_positionAttribute);
+    // Setup position
+
+    glEnableVertexAttribArray(_positionAttribute);
     GetError();
 
-    glVertexAttribPointer((GLuint)_positionAttribute, numVertex, GL_FLOAT, GL_FALSE, sizeof(VertexTextCoords), (GLvoid *)offsetof(VertexTextCoords, vertices));
-    GetError();
-
-
-    glEnableVertexAttribArray((GLuint)_textCoordAttribute);
-    GetError();
-
-    glVertexAttribPointer((GLuint)_textCoordAttribute, numVertex, GL_FLOAT, GL_FALSE, sizeof(VertexTextCoords), (GLvoid *)offsetof(VertexTextCoords, textCoords));
+    glVertexAttribPointer(_positionAttribute, 4, GL_FLOAT, GL_FALSE, sizeof(VertexTextCoords), (GLvoid *)offsetof(VertexTextCoords, vertices));
     GetError();
 
 
-    glUniformMatrix4fv(_uniforms[kModelViewProjectionMatrixUniform], 1, GL_FALSE, _orthoMat.m);
+    // Setup texture coordinates
+
+    glEnableVertexAttribArray(_textCoordAttribute);
     GetError();
+
+    glVertexAttribPointer(_textCoordAttribute, 4, GL_FLOAT, GL_FALSE, sizeof(VertexTextCoords), (GLvoid *)offsetof(VertexTextCoords, textCoords));
+    GetError();
+
 
     glUniform1i(_uniforms[kMeterUniform], _textures[kMeterUniform].index - 1);
     GetError();
 
 
-    // Select meter texture.
-    // We only have one texture and it is already active,
-    // so we don't actually need to switch texture again.
+    // Select meter texture
+    //
+    // NOTE: We only have one texture and it is already active,
+    // so we don't actually have to switch texture again.
     //
     //    glActiveTexture(GL_TEXTURE0);
     //    GetError();
@@ -484,8 +505,15 @@ typedef struct
     //    GetError();
 
 
-    glDrawArrays(GL_TRIANGLE_FAN, 0, numVertex);
+    // Draw textured rectangle
+
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     GetError();
+
+    // Cleanup
+
+    glDisableVertexAttribArray(_positionAttribute);
+    glDisableVertexAttribArray(_textCoordAttribute);
 }
 
 - (void)loadTextureData
