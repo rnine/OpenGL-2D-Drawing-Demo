@@ -76,6 +76,8 @@ typedef struct
 
     CGRect _oldBounds;
     GLKMatrix4 _orthoMat;
+
+    CFTimeInterval _oldTimeInterval;
 }
 @end
 
@@ -92,6 +94,7 @@ typedef struct
         self.needsDisplayOnBoundsChange = YES;
         self.asynchronous = YES;
         self.shouldUpdate = YES;
+        self.limitFPS = NO;
     }
 
     return self;
@@ -146,14 +149,42 @@ typedef struct
 
 - (BOOL)canDrawInCGLContext:(CGLContextObj)glContext pixelFormat:(CGLPixelFormatObj)pixelFormat forLayerTime:(CFTimeInterval)timeInterval displayTime:(const CVTimeStamp *)timeStamp
 {
-    // We can control when to draw, by returning a BOOL here
-    return self.shouldUpdate;
+    if (!self.shouldUpdate)
+    {
+        return NO;
+    }
+
+    if (self.limitFPS)
+    {
+        // We can control when to draw, by returning a BOOL here
+        if (!_oldTimeInterval)
+        {
+            _oldTimeInterval = 0;
+        }
+
+        CGFloat dx = (timeInterval - _oldTimeInterval);
+
+        // Limit to 30 FPS
+        if (dx >= 0.033)
+        {
+            _oldTimeInterval = timeInterval;
+
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
+    }
+    else
+    {
+        return YES;
+    }
 }
 
 - (void)drawInCGLContext:(CGLContextObj)glContext pixelFormat:(CGLPixelFormatObj)pixelFormat forLayerTime:(CFTimeInterval)timeInterval displayTime:(const CVTimeStamp *)timeStamp
 {
     // Set the current context to the one given to us.
-
     CGLSetCurrentContext(glContext);
 
     // Clear buffer
