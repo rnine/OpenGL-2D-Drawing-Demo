@@ -24,6 +24,13 @@ typedef NS_ENUM (NSUInteger, Textures)
     kNumTextures
 };
 
+typedef NS_ENUM (NSInteger, Attributes)
+{
+    kPositionAttribute = 0,
+    kTextCoordAttribute,
+    kNumAttributes
+};
+
 typedef struct
 {
     GLfloat x, y;
@@ -51,14 +58,11 @@ typedef struct
 
     GLint _uniforms[kNumUniforms];
     TextureInfo _textures[kNumTextures];
+    Attributes _attributes[kNumAttributes];
 
-    GLint _colorAttribute;
-    GLint _positionAttribute;
-    GLint _textCoordAttribute;
-
-    CGRect _oldBounds;
     GLKMatrix4 _orthoMat;
 
+    CGRect _oldBounds;
     CFTimeInterval _oldTimeInterval;
 }
 @end
@@ -90,7 +94,8 @@ typedef struct
 
     if (context || (context = [super copyCGLContextForPixelFormat:pixelFormat]))
     {
-        //Setup any OpenGL state, make sure to set the context before invoking OpenGL
+        // Setup any OpenGL state, make sure to set the context before invoking OpenGL
+
         CGLContextObj currContext = CGLGetCurrentContext();
         CGLSetCurrentContext(context);
 
@@ -100,7 +105,8 @@ typedef struct
         glClearColor(0.0, 0.0, 0.2, 1.0);
         GetError();
 
-        //Issue any calls that require the context here.
+        // Issue any calls that require the context here.
+
         CGLSetCurrentContext(currContext);
     }
 
@@ -121,7 +127,6 @@ typedef struct
 
     attribs[1] = mask;
 
-
     CGLPixelFormatObj pixFormatObj = NULL;
     GLint numPixFormats = 0;
     CGLChoosePixelFormat(attribs, &pixFormatObj, &numPixFormats);
@@ -138,7 +143,6 @@ typedef struct
 
     if (self.limitFPS)
     {
-        // We can control when to draw, by returning a BOOL here
         if (!_oldTimeInterval)
         {
             _oldTimeInterval = 0;
@@ -272,19 +276,19 @@ typedef struct
             }
         }
 
-        _positionAttribute = glGetAttribLocation(_shaderProgram, "i_position");
+        _attributes[kPositionAttribute] = glGetAttribLocation(_shaderProgram, "i_position");
         GetError();
 
-        if (_positionAttribute < 0)
+        if (_attributes[kPositionAttribute] < 0)
         {
             [NSException raise:kFailedToInitialiseGLException
                         format:@"Shader did not contain the 'i_position' attribute."];
         }
 
-        _textCoordAttribute = glGetAttribLocation(_shaderProgram, "i_textCoord");
+        _attributes[kTextCoordAttribute] = glGetAttribLocation(_shaderProgram, "i_textCoord");
         GetError();
 
-        if (_textCoordAttribute < 0)
+        if (_attributes[kTextCoordAttribute] < 0)
         {
             [NSException raise:kFailedToInitialiseGLException
                         format:@"Shader did not contain the 'i_textCoord' attribute."];
@@ -487,19 +491,19 @@ typedef struct
 
     // Setup position
 
-    glEnableVertexAttribArray(_positionAttribute);
+    glEnableVertexAttribArray(_attributes[kPositionAttribute]);
     GetError();
 
-    glVertexAttribPointer(_positionAttribute, 4, GL_FLOAT, GL_FALSE, sizeof(VertexTextCoords), (GLvoid *)offsetof(VertexTextCoords, vertices));
+    glVertexAttribPointer(_attributes[kPositionAttribute], 4, GL_FLOAT, GL_FALSE, sizeof(VertexTextCoords), (GLvoid *)offsetof(VertexTextCoords, vertices));
     GetError();
 
 
     // Setup texture coordinates
 
-    glEnableVertexAttribArray(_textCoordAttribute);
+    glEnableVertexAttribArray(_attributes[kTextCoordAttribute]);
     GetError();
 
-    glVertexAttribPointer(_textCoordAttribute, 4, GL_FLOAT, GL_FALSE, sizeof(VertexTextCoords), (GLvoid *)offsetof(VertexTextCoords, textCoords));
+    glVertexAttribPointer(_attributes[kTextCoordAttribute], 4, GL_FLOAT, GL_FALSE, sizeof(VertexTextCoords), (GLvoid *)offsetof(VertexTextCoords, textCoords));
     GetError();
 
 
@@ -526,8 +530,8 @@ typedef struct
 
     // Cleanup
 
-    glDisableVertexAttribArray(_positionAttribute);
-    glDisableVertexAttribArray(_textCoordAttribute);
+    glDisableVertexAttribArray(_attributes[kPositionAttribute]);
+    glDisableVertexAttribArray(_attributes[kTextCoordAttribute]);
 }
 
 - (void)loadTextureData
