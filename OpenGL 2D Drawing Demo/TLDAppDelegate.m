@@ -40,4 +40,9 @@
     self.openGLLayer.shouldUpdate = [sender state] == NSOnState;
 }
 
+- (IBAction)shouldLimitFPS:(id)sender
+{
+    self.openGLLayer.limitFPS = [sender state] == NSOnState;
+}
+
 @end
