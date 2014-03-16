@@ -58,7 +58,7 @@ typedef struct
     GLuint _vbo;
 
     GLint _uniforms[kNumUniforms];
-    GLuint _textures[kNumUniforms];
+    GLuint _textures[kNumTextures];
 
     GLint _colorAttribute;
     GLint _positionAttribute;
