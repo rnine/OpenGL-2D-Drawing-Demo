@@ -8,21 +8,19 @@
 
 #import "TLDOpenGLLayer.h"
 #import "error.h"
-#import <OpenGL/OpenGL.h>
 #import <OpenGL/gl3.h>
 #import <GLKit/GLKMath.h>
 
-enum Uniforms
+typedef NS_ENUM (NSUInteger, Uniforms)
 {
     kMeterUniform = 0,
     kModelViewProjectionMatrixUniform,
     kNumUniforms
 };
 
-enum Textures
+typedef NS_ENUM (NSUInteger, Textures)
 {
     kBackgroundTexture = 0,
-    kHoleTexture,
     kNumTextures
 };
 
@@ -30,22 +28,6 @@ typedef struct
 {
     GLfloat x, y;
 } Vector2;
-
-typedef struct
-{
-    GLfloat x, y, z, w;
-} Vector4;
-
-typedef struct
-{
-    GLfloat r, g, b, a;
-} Color;
-
-typedef struct
-{
-    Vector4 position;
-    Color color;
-} Vertex;
 
 typedef struct
 {
@@ -521,7 +503,7 @@ typedef struct
     GetError();
 
 
-    glUniform1i(_uniforms[kMeterUniform], _textures[kMeterUniform].index - 1);
+    glUniform1i(_uniforms[kBackgroundTexture], _textures[kBackgroundTexture].index - 1);
     GetError();
 
 
@@ -533,7 +515,7 @@ typedef struct
     //    glActiveTexture(GL_TEXTURE0);
     //    GetError();
     //
-    //    glBindTexture(GL_TEXTURE_2D, _textures[kMeterUniform].index);
+    //    glBindTexture(GL_TEXTURE_2D, _textures[kBackgroundTexture].index);
     //    GetError();
 
 
@@ -550,12 +532,12 @@ typedef struct
 
 - (void)loadTextureData
 {
-    _textures[kMeterUniform] = [self loadTextureNamed:@"HMeter480"];
+    _textures[kBackgroundTexture] = [self loadTextureNamed:@"HMeter480"];
 
-    if (_textures[kMeterUniform].index)
+    if (_textures[kBackgroundTexture].index)
     {
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, _textures[kMeterUniform].index);
+        glBindTexture(GL_TEXTURE_2D, _textures[kBackgroundTexture].index);
     }
 }
 
