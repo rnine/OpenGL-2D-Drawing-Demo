@@ -185,6 +185,7 @@ typedef struct
 - (void)drawInCGLContext:(CGLContextObj)glContext pixelFormat:(CGLPixelFormatObj)pixelFormat forLayerTime:(CFTimeInterval)timeInterval displayTime:(const CVTimeStamp *)timeStamp
 {
     // Set the current context to the one given to us.
+
     CGLSetCurrentContext(glContext);
 
     // Clear buffer
