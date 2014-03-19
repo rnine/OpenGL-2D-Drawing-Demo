@@ -1,6 +1,6 @@
 ## OpenGL 2D Drawing Demo ##
 
-![Demo](/Demo.gif?raw=true)
+![Demo](http://talkingincode.troikalabs.com/content/images/2014/Mar/Demo.gif)
 
 `OpenGL 2D Drawing Demo` shows how to load and render pixels in a `CAOpenGLLayer` using a custom vertex and fragment shader using Open GL 3.2 and GLSL 1.50.
 
