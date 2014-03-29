@@ -116,7 +116,7 @@ typedef struct
 - (CGLPixelFormatObj)copyCGLPixelFormatForDisplayMask:(uint32_t)mask
 {
     CGLPixelFormatAttribute attribs[] =  {
-        kCGLPFADisplayMask, 0,
+        kCGLPFADisplayMask, mask,
         kCGLPFAColorSize, 24,
         kCGLPFAAlphaSize, 8,
         kCGLPFAAccelerated,
@@ -125,10 +125,9 @@ typedef struct
         0
     };
 
-    attribs[1] = mask;
-
     CGLPixelFormatObj pixFormatObj = NULL;
     GLint numPixFormats = 0;
+
     CGLChoosePixelFormat(attribs, &pixFormatObj, &numPixFormats);
 
     return pixFormatObj;
