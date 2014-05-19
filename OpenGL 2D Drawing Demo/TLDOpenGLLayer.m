@@ -118,7 +118,7 @@ typedef struct
         kCGLPFADisplayMask, mask,
         kCGLPFAColorSize, 24,
         kCGLPFAAlphaSize, 8,
-        kCGLPFAAccelerated,
+//        kCGLPFAAccelerated,
         kCGLPFADoubleBuffer,
         kCGLPFAAllowOfflineRenderers,
 //        kCGLPFASupportsAutomaticGraphicsSwitching,
