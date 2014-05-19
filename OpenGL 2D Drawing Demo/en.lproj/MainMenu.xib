@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
+        <deployment defaultVersion="1070" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -691,7 +692,7 @@
                             <action selector="shouldDraw:" target="Voe-Tx-rLC" id="vls-in-B5E"/>
                         </connections>
                     </button>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IJD-Xh-1nZ">
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="IJD-Xh-1nZ">
                         <rect key="frame" x="122" y="6" width="79" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Limit FPS" bezelStyle="regularSquare" imagePosition="left" inset="2" id="JQQ-6M-2ZD">
@@ -704,12 +705,14 @@
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="IJD-Xh-1nZ" firstAttribute="baseline" secondItem="q4T-2i-dXB" secondAttribute="baseline" id="9ny-qC-J52"/>
                     <constraint firstItem="q4T-2i-dXB" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" symbolic="YES" id="J1s-DJ-Qem"/>
                     <constraint firstItem="q4T-2i-dXB" firstAttribute="top" secondItem="7D3-b0-KmL" secondAttribute="bottom" constant="8" symbolic="YES" id="WfN-Jt-MRp"/>
                     <constraint firstAttribute="trailing" secondItem="7D3-b0-KmL" secondAttribute="trailing" id="aUX-3p-Wpg"/>
                     <constraint firstItem="7D3-b0-KmL" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="fo1-AV-3YL"/>
                     <constraint firstAttribute="bottom" secondItem="7D3-b0-KmL" secondAttribute="bottom" constant="30" id="sef-9q-eFE"/>
                     <constraint firstItem="7D3-b0-KmL" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="tDg-3s-iQ7"/>
+                    <constraint firstItem="IJD-Xh-1nZ" firstAttribute="leading" secondItem="q4T-2i-dXB" secondAttribute="trailing" constant="8" symbolic="YES" id="ufS-7S-Ub0"/>
                 </constraints>
             </view>
             <connections>

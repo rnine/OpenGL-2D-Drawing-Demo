@@ -9,7 +9,6 @@
 #import "TLDOpenGLLayer.h"
 #import "error.h"
 #import <OpenGL/gl3.h>
-#import <GLKit/GLKMath.h>
 
 typedef NS_ENUM (NSUInteger, Uniforms)
 {
@@ -60,7 +59,7 @@ typedef struct
     TextureInfo _textures[kNumTextures];
     Attributes _attributes[kNumAttributes];
 
-    GLKMatrix4 _orthoMat;
+    TLDMatrix4 _orthoMat;
 
     CGRect _oldBounds;
     CFTimeInterval _oldTimeInterval;
@@ -121,6 +120,8 @@ typedef struct
         kCGLPFAAlphaSize, 8,
         kCGLPFAAccelerated,
         kCGLPFADoubleBuffer,
+        kCGLPFAAllowOfflineRenderers,
+//        kCGLPFASupportsAutomaticGraphicsSwitching,
         NSOpenGLPFAOpenGLProfile, NSOpenGLProfileVersion3_2Core,
         0
     };
@@ -472,7 +473,7 @@ typedef struct
     if (!CGRectEqualToRect(self.bounds, _oldBounds))
     {
         // Recalculate orthographic projection based on current bounds
-        _orthoMat = GLKMatrix4MakeOrtho(0, NSWidth(self.bounds), 0, NSHeight(self.bounds), -1, 1);
+        _orthoMat = TLDMatrix4MakeOrtho(0, NSWidth(self.bounds), 0, NSHeight(self.bounds), -1, 1);
     }
 
     _oldBounds = self.bounds;
@@ -484,7 +485,7 @@ typedef struct
     GetError();
 
 
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vtc), vtc, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vtc), vtc, GL_STREAM_DRAW);
     GetError();
 
 
